@@ -123,5 +123,16 @@ namespace Moneybox.App.Tests
             Assert.AreEqual(-5m, testFromAcc.Withdrawn);
             Assert.AreEqual(0, testToAcc.Withdrawn);
         }
+
+        [Test]
+        public void ThrowsNoAccountError()
+        {
+            var testTransferMoney = new TransferMoney(mockAccountRepository.Object, mockNotificationService.Object);
+            var invalidGuid = Guid.NewGuid();
+
+            var ex = Assert.Throws<InvalidOperationException>(() => testTransferMoney.Execute(invalidGuid, toAccId, 11));
+
+            Assert.AreEqual($"Failed to withdraw from account. Could not find the account with the provided account id: {invalidGuid}", ex.Message);
+        }
     }
 }

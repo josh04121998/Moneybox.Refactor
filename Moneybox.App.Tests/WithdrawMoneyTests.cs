@@ -65,12 +65,22 @@ namespace Moneybox.App.Tests
         [Test]
         public void NotifiesFundsLow()
         {
-            var testWithdrawrMoney = new WithdrawMoney(mockAccountRepository.Object, mockNotificationService.Object);
-            testWithdrawrMoney.Execute(fromAccId, 5);
+            var testWithdrawMoney = new WithdrawMoney(mockAccountRepository.Object, mockNotificationService.Object);
+            testWithdrawMoney.Execute(fromAccId, 5);
 
             mockNotificationService.Verify(x => x.NotifyFundsLow(AUser.Email), Times.Once());
             mockAccountRepository.Verify(x => x.Update(It.IsAny<Account>()), Times.Once());
         }
 
+        [Test]
+        public void ThrowsNoAccountError()
+        {
+            var testWithdrawMoney = new WithdrawMoney(mockAccountRepository.Object, mockNotificationService.Object);
+            var invalidGuid = Guid.NewGuid();
+
+            var ex = Assert.Throws<InvalidOperationException>(() => testWithdrawMoney.Execute(invalidGuid, 11));
+
+            Assert.AreEqual($"Failed to withdraw from account. Could not find the account with the provided account id: {invalidGuid}", ex.Message);
+        }
     }
 }

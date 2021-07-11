@@ -19,7 +19,17 @@ namespace Moneybox.App.Features
         {
             
             var sourceAccount = _accountRepository.GetAccountById(fromAccountId);
+            if (sourceAccount == null)
+            {
+                throw new InvalidOperationException($"Failed to withdraw from account. " +
+                    $"Could not find the account with the provided account id: {fromAccountId}");
+            };
             var destinationAccount = _accountRepository.GetAccountById(toAccountId);
+            if (destinationAccount == null)
+            {
+                throw new InvalidOperationException($"Failed to withdraw from account. " +
+                    $"Could not find the account with the provided account id: {toAccountId}");
+            };
 
             sourceAccount.Withdraw(amount);
             destinationAccount.Deposit(amount);
