@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moneybox.App", "Moneybox.App\Moneybox.App.csproj", "{C1E5082E-45D6-469C-BD08-B87348851443}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneybox.App.Tests", "Moneybox.App.Tests\Moneybox.App.Tests.csproj", "{26D91B2C-9609-4A90-87A6-5943F1C642C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1E5082E-45D6-469C-BD08-B87348851443} = {C1E5082E-45D6-469C-BD08-B87348851443}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
